@@ -8,43 +8,61 @@ O objetivo desse trabalho é desenvolver uma aplicação para executar missões 
 
 ## Preparando o ambiente (Fazer isso somente 1 vez)
 ##### Clonar o repositorio da aplicação
-`git clone https://github.com/rlobotech/autonomous_drone_ufba.git`
+```
+git clone https://github.com/rlobotech/autonomous_drone_ufba.git
+```
 
 ##### Instalar o virtualenv 
 Necessario para que as dependencias do projeto nao sejam instaladas globalmente.
-`aptitude install python-dev python-pip virtualenv build-essential`
+```
+aptitude install python-dev python-pip virtualenv build-essential
+```
 
 ##### Criar o virtualenv
 **venv** é diretorio do ambiente virtual
-`virtualenv venv`
+```
+virtualenv venv
+```
 
 ##### Ativa o virtualenv
-`source venv/bin/activate`
+```
+source venv/bin/activate
+```
 
 ##### Instalar os requirements da app
-`cd ../autonomous_drone_ufba/control-tower/`
-`pip install -r requirements.txt`
+```
+cd ../autonomous_drone_ufba/control-tower/
+pip install -r requirements.txt
+```
 
 ##### Criar banco de dados
-`python dbinit.py`
+```
+python dbinit.py
+```
 
 
 ## Executar a aplicação 
 Somente após preparar o ambiente.
 
 ##### Ativa o virtualenv
-`source venv/bin/activate`
+```
+source venv/bin/activate
+```
 
 ##### Inicializar a app
-`python run.py`
+```
+python run.py
+```
 
 ##### Acessar a app
-Abrir o browser e acessar o link (localhost:5000). 
+Abrir o browser e acessar o link <localhost:5000>. 
 Caso nao funcione, utilizar o link informado no terminal.
 
 Acessar a aplicação utilizando as credenciais:
-`user: admin@admin`
-`password: password`
+```
+user: admin@admin
+password: password
+```
 
 As credencias são carregadas ao banco no arquivo dbinit.py.
 

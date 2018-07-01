@@ -19,7 +19,7 @@ aptitude install python-dev python-pip virtualenv build-essential
 ```
 
 ##### Criar o virtualenv
-**venv** é diretorio do ambiente virtual
+**venv** é o diretorio do ambiente virtual
 ```
 virtualenv venv
 ```
@@ -55,7 +55,7 @@ python run.py
 ```
 
 ##### Acessar a app
-Abrir o browser e acessar o link <localhost:5000>. 
+Abrir o browser e acessar o link **localhost:5000**. 
 Caso nao funcione, utilizar o link informado no terminal.
 
 Acessar a aplicação utilizando as credenciais:
