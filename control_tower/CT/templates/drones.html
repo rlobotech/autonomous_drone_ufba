@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Drones
+  </h1>
+</section>
+<!-- Main content -->
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ url_for('drone_new') }}" class="btn btn-app">
+        <i class="fa fa-save"></i>
+        Cadastrar Drone
+      </a>
+      <div class="box box-warning">
+        <div class="box-body table-responsive">
+          <form method="POST" action="">
+            <div class="input-group input-group-sm">
+              <input type="text" name="drone_search" class="form-control" value="{{ drone_search }}">
+              <span class="input-group-btn">
+                <button class="btn btn-warning btn-flat" type="submit">Pesquisar</button>
+              </span>
+            </div>
+          </form><br>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome do drone</th>
+                <th>Modelo</th>
+                <th>IP</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if not drones %}
+                <tr>
+                  <td colspan="7">Nenhum drone encontrado</td>
+                </tr>
+              {% endif %}
+              {% for drone in drones %}
+                <tr>
+                  <td>{{ drone.id }}</td>
+                  <td>{{ drone.name }}</td>
+                  <td>{{ drone.model }}</td>
+                  <td>{{ drone.ip }}</td>
+                  <td>
+                    <form method="POST" action="{{ url_for('drone_edit') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Editar"><i class="fa fa-pencil"></i></button>
+                    </form>
+                    <form method="POST" action="{{ url_for('drone_delete') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-danger ajust_button" title="Remover"><i class="fa fa-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

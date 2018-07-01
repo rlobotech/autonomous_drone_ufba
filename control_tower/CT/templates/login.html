@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/AdminLTE.min.css') }}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/iCheck/square/yellow.css') }}">
+  <!-- background -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="body">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Control Tower</b> LaSiD </a>
+    </div>
+  <!-- /.login-logo -->
+
+  <div class="login-box-body">
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group has-feedback">
+        {{ form.email(required=true, placeholder="E-mail", class="form-control") }}
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        {{ form.password(required=true, placeholder="Senha", class="form-control") }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+        </div>
+      </div>
+      {% if not form.ignore_captcha %}
+      <div class="row">
+        <div class="col-xs-12">
+          <br>
+          {{ form.recaptcha }}
+        </div>
+      </div>
+      {% endif %}
+    </form>
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <p class="text-center">{{ message }}</p>
+          </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+      <div class="container navbar-header navbar-brand">
+        <div class="pull-right">
+          <strong>&copy; 2017</strong> - Laboratório de Sistemas Distribuídos (LaSiD)
+        </div>
+      </div>
+    </nav>
+    <!-- jQuery 2.2.3 -->
+    <script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- iCheck -->
+    <script src="{{ url_for('static', filename='plugins/iCheck/icheck.min.js') }}"></script>
+    <script>
+      $(function () {
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+      });
+      });
+    </script>
+  </body>
+</html>

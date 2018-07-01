@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Usuários
+  </h1>
+</section>
+<!-- Main content -->
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ url_for('user_new') }}" class="btn btn-app">
+        <i class="fa fa-save"></i>
+        Cadastrar usuário
+      </a>
+      <div class="box box-warning">
+        <div class="box-body table-responsive">
+          <form method="POST" action="">
+            <div class="input-group input-group-sm">
+              <input type="text" name="user_search" class="form-control" value="{{ user_search }}">
+              <span class="input-group-btn">
+                <button class="btn btn-warning btn-flat" type="submit">Pesquisar</button>
+              </span>
+            </div>
+          </form><br>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome do Usuario</th>
+                <th>Email</th>
+                <th>Conta</th>
+                <th>Último acesso</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if not users %}
+                <tr>
+                  <td colspan="7">Nenhum usuário encontrado</td>
+                </tr>
+              {% endif %}
+              {% for user in users %}
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.realname }}</td>
+                  <td>{{ user.email }}</td>
+                  {% if user.active %}
+                    <td>Ativa</td>
+                  {% else %}
+                    <td>Inativa</td>
+                  {% endif %}
+                  {% if user.last_login_date %}
+                  <td>{{ user.last_login_ip }} - {{ user.last_login_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                  {% else %}
+                  <td>Nunca</td>
+                  {% endif %}
+                  <td>
+                    <form action="{{ url_for('user_edit', csrf_token=csrf_token(), user_id=user.id) }}" style="margin-bottom:0px;display:inline;">
+                      <button type="submit" class="btn btn-success ajust_button" title="Editar"><i class="fa fa-pencil"></i></button>
+                    </form>
+                    <button type="submit" onclick="Remover({{user.id}})" class="btn btn-danger ajust_button" title="Remover"><i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block modal %}
+<!-- MODAL REMOVE -->
+<div class="modal fade" id="remove" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-times"></i> Remoção de usuário</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <p style="font-size:18px">Realmente deseja remover?</p>
+        </div>
+      </div>
+      <div class="modal-footer clearfix">
+        <form method="POST" action="{{ url_for('user_delete') }}" style="margin-bottom:0px;display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <input type="hidden" name="user_id" id="user_id">
+          <button type="submit" class="btn btn-primary ajust_button pull-left" title="Remover"> Sim</button>
+        </form>
+        <a href="{{ url_for('users') }}" class="btn btn-danger pull-right"> Não</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+function Remover(user_id) {
+    $("#user_id").val(user_id);
+    $("#remove").modal("show");
+}
+</script>
+{% endblock %}

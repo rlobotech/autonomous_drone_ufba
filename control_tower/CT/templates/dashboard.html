@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block css %}
+{% endblock %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Dashboard <small>Painel administrativo</small>
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>{{ total_drones }}</h3>
+          <p>Drones Cadastrados</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-fw fa-plane"></i>
+        </div>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>3</h3>
+          <p>Missões Cadastradas</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-fw fa-map-o"></i>
+        </div>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>0</h3>
+          <p>Drones conectados</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-fw fa-thumbs-o-up"></i>
+        </div>
+      </div>
+    </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h3>3</h3>
+            <p>Drones desconectados</p>
+        </div>
+        <div class="icon">
+        <i class="fa fa-fw fa-thumbs-o-down"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>Lista de Drones</h4>
+        </div>
+        <div class="panel-body">
+          <form method="POST" action="">
+            <div class="input-group input-group-sm">
+              <input type="text" name="drone_search" class="form-control" value="{{ drone_search }}">
+              <span class="input-group-btn">
+                <button class="btn btn-primary btn-flat" type="submit">Pesquisar</button>
+              </span>
+            </div>
+          </form><br>
+        </div>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome do drone</th>
+                <th>Modelo</th>
+                <th>IP</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if not drones %}
+                <tr>
+                  <td colspan="7">Nenhum drone encontrado</td>
+                </tr>
+              {% endif %}
+              {% for drone in drones %}
+                <tr>
+                  <td>{{ drone.id }}</td>
+                  <td>{{ drone.name }}</td>
+                  <td>{{ drone.model }}</td>
+                  <td>{{ drone.ip }}</td>
+                  <td>
+                    {% if connect == 0 %}
+                    <form method="POST" action="{{ url_for('dashboard') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <input type="hidden" name="status" value="1">
+                      <button type="submit" class="btn btn-danger ajust_button" title="Conectar ao drone">Desconectado</button>
+                    </form>
+                    {% else %}
+                    <form method="POST" action="{{ url_for('dashboard') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <input type="hidden" name="status" value="1">
+                      <button type="submit" class="btn btn-success ajust_button" title="desconectar o drone">Conectado</button>
+                    </form>
+                    {% endif %}
+                    <form method="POST" action="{{ url_for('map') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Rastreiar drone">
+                        GPS
+                      </button>
+                    </form>
+                    <form method="POST" action=" " style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Carregar missão">
+                        Missão
+                      </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('sensors') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Leitura dos sensores">
+                        Sensores
+                      </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('controller') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="id" value="{{drone.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Controle manual">
+                        Controle
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block js %}
+{% endblock %}

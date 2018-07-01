@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css">
+{% endblock %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    {% if All == 1 %}
+      Rastreiamento de todos os drones conectados
+    {% else %}
+      Rastreiamento do drone: {{ drones.name }}
+    {% endif %}
+  </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-warning">
+        <div class="box-body table-responsive">
+          <table class="table table-bordered table-striped">
+            <tbody>
+              <div id="map" style="height: 700px"></div>
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+<script type="text/javascript">
+var droneIcon = L.icon({
+    iconUrl: '../static/img/drone.png',
+    iconSize:     [40, 40], // size of the icon
+    iconAnchor:   [22, 39], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+});
+var map = L.map('map').setView([-13.0024602, -38.5111639], 17);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+{% if All == 1 %}
+  {% for drone in drones %}
+    L.marker([-13.0018, -38.5079], {icon: droneIcon}).addTo(map)
+        .bindPopup("<strong>{{drone.name}}</strong>");
+  {% endfor %}
+{% else %}
+L.marker([-13.0018, -38.5079], {icon: droneIcon}).addTo(map)
+    .bindPopup("<strong>{{ drones.name }}</strong>").openPopup();
+{% endif %}
+</script>
+{% endblock %}

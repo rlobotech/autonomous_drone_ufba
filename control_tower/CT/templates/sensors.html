@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css">
+{% endblock %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    {% if All == 1 %}
+      Leitura dos sensores do drone
+    {% else %}
+      Leitura dos sensores do drone: {{ drones.name }}
+    {% endif %}
+  </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-warning">
+        <div class="box-body table-responsive">
+          <table class="table table-bordered table-striped">
+            <tbody>
+
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block js %}
+{% endblock %}

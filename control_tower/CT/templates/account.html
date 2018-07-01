@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Configuração
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+  <div class="col-lg-12">
+    <div class="box box-warning">
+      <div class="box-body">
+        <!-- form start -->
+        <form method = "post" id="form">
+          <legend><b>Dados da conta</b></legend>
+           {{ form.csrf_token }}
+           <div class="box-body">
+             <div class="row">
+               <div class="col-sm-8">
+                 <div class="form-group">
+                   <i class="fa fa-user" aria-hidden="true"></i>
+                   {{ form.realname.label }}
+                   {{form.realname(required=true, class="form-control")}}
+                 </div>
+               </div>
+             </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  {{ form.email.label }}
+                  {{form.email(required=true, class="form-control")}}
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  {{ form.email_two.label }}
+                  {{form.email_two(required=true, class="form-control")}}
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="submit" class="btn btn-lg btn-warning"> Salvar</button>
+            </div>
+          </div>
+        </form>
+      </br>
+        <form class="form-signin" id="form2" method="POST">
+          {{ form2.csrf_token }}
+          <legend><b>Dados de acesso</b></legend>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="form-group">
+                {{ form2.password_one.label }}
+                {{form2.password_one(required=true, class="form-control input-lg", pattern=".{8,}", placeholder="Mínimo de 8 caracteres")}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                {{ form2.password_two.label }}
+                {{form2.password_two(required=true, class="form-control input-lg", pattern=".{8,}", placeholder="Mínimo de 8 caracteres")}}
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                {{ form2.password_three.label }}
+                {{form2.password_three(required=true, class="form-control input-lg", pattern=".{8,}", placeholder="Mínimo de 8 caracteres")}}
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-lg btn-warning"> Alterar Senha</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block modal %}
+<!-- MODAL SUCESSO -->
+<div class="modal fade" id="sucesso" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b><i class="fa fa-edit"></i> Edição</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <b><p style="font-size:18px" id="msg"></p></b>
+        </div>
+      </div>
+      <div class="modal-footer clearfix">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-warning pull-right"><i class="fa fa-check"></i> OK</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ERRO -->
+<div class="modal modal-danger fade" id="erro" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color:white"><b>Alerta!</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <b><p style="font-size:18px" id="msg_error"></p></b>
+        </div>
+      </div>
+      <div class="modal-footer clearfix">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<!-- Enviando dados do formulário via ajax -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#form").submit(function(){
+      $.ajax({
+        type: "POST",
+        url: "{{ url_for('config_account_edit') }}",
+        data: new FormData( this ),
+        processData: false,
+        contentType: false,
+        cache: false,
+      })
+      .done(function(data){
+        if (data=="Conta alterada com sucesso"){
+          alert = document.getElementById("msg");
+          alert.innerHTML = ( data );
+          $("#sucesso").modal("show");
+        }
+        else{
+          alert = document.getElementById("msg_error");
+          alert.innerHTML = ( data );
+          $("#erro").modal("show");
+        }
+      })
+      .fail(function(xhr, textStatus, errorThrown) {
+        alert = document.getElementById("msg_error");
+        alert.innerHTML = ( xhr.responseText.match("<title>(.*?)</title>")[1] );
+        $("#erro").modal("show");
+      });
+      return false;
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#form2").submit(function(){
+      $.ajax({
+        type: "POST",
+        url: "{{ url_for('config_account_password') }}",
+        data: new FormData( this ),
+        processData: false,
+        contentType: false,
+        cache: false,
+      })
+      .done(function(data){
+        if (data=="Senha alterada com sucesso"){
+          alert = document.getElementById("msg");
+          alert.innerHTML = ( data );
+          $("#sucesso").modal("show");
+        }
+        else{
+          alert = document.getElementById("msg_error");
+          alert.innerHTML = ( data );
+          $("#erro").modal("show");
+        }
+      })
+      .fail(function(xhr, textStatus, errorThrown) {
+        alert = document.getElementById("msg_error");
+        alert.innerHTML = ( xhr.responseText.match("<title>(.*?)</title>")[1] );
+        $("#erro").modal("show");
+      });
+      return false;
+    });
+  });
+</script>
+<script type="text/javascript">
+  //Máscaras:
+  document.getElementById('email_two').onpaste = function(){
+    return false;
+  }
+</script>
+{% endblock %}

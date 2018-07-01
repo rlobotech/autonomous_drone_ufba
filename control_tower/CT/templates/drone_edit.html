@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Editar Drone
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+  <div class="col-lg-12">
+    <div class="box box-warning">
+      <div class="box-body">
+        <!-- form start -->
+        <form method = "post" id="form">
+           {{ form.csrf_token }}
+           <input type="hidden" id="id" value="{{ drone.id }}">
+           <div class="box-body">
+            <div class="form-group">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              {{ form.name.label }}
+              {{form.name(required=true, class="form-control")}}
+            </div>
+
+            <div class="form-group">
+              <i class="fa fa-key" aria-hidden="true"></i>
+              {{ form.model.label }}
+              {{form.model(required=true, class="form-control")}}
+            </div>
+
+            <div class="form-group">
+              <i class="fa fa-expeditedssl" aria-hidden="true"></i>
+              {{ form.ip.label }}
+              {{form.ip(required=true, class="form-control")}}
+            </div>
+
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i> Salvar</button>
+                <a href="{{ url_for('drones') }}" class="btn btn-default btn-flat"><i class="fa fa-reply"></i> Voltar</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}
+{% block modal %}
+    <!-- MODAL SUCESSO -->
+    <div class="modal fade" id="sucesso" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-edit"></i> Edição de drone</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <p style="font-size:18px">Drone editado com sucesso</p>
+            </div>
+          </div>
+          <div class="modal-footer clearfix">
+            <a href="{{ url_for('drones') }}" class="btn btn-warning pull-right"><i class="fa fa-check"></i> OK</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL ERRO -->
+    <div class="modal modal-danger fade" id="erro" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-edit"></i> Edição de drone</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <p style="font-size:18px" id="msg_error"></p>
+            </div>
+          </div>
+          <div class="modal-footer clearfix">
+            <button type="button" class="btn btn-outline pull-right" data-dismiss="modal"><i class="fa fa-check"></i> OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block js %}
+<!-- Enviando dados do formulário via ajax -->
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#form").submit(function(){
+        var pass = $("#password").val();
+        if (pass == ""){
+          pass = "#########";
+        }
+        $.ajax({
+          type: "POST",
+          url: "{{ url_for('drone_edit_submit') }}",
+          data: {
+            id: $("#id").val(),
+            csrf_token: $("#csrf_token").val(),
+            name: $("#name").val(),
+            model: $("#model").val(),
+            ip: $("#ip").val()
+          }
+        })
+        .done(function(data){
+          if (data=="Drone editado com sucesso"){
+            $("#sucesso").modal("show");
+          }
+          else{
+            alert = document.getElementById("msg_error");
+            alert.innerHTML = ( data );
+            $("#erro").modal("show");
+          }
+        })
+        .fail(function(xhr, textStatus, errorThrown) {
+          alert = document.getElementById("msg_error");
+          alert.innerHTML = ( xhr.responseText.match("<title>(.*?)</title>")[1] );
+          $("#erro").modal("show");
+        });
+        return false;
+      });
+    });
+  </script>
+{% endblock %}

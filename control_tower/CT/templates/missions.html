@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Missões
+  </h1>
+</section>
+<!-- Main content -->
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ url_for('mission_new') }}" class="btn btn-app">
+        <i class="fa fa-save"></i>
+        Cadastrar missão
+      </a>
+      <div class="box box-warning">
+        <div class="box-body table-responsive">
+          <form method="POST" action="">
+            <div class="input-group input-group-sm">
+              <input type="text" name="mission_search" class="form-control" value="{{ mission_search }}">
+              <span class="input-group-btn">
+                <button class="btn btn-warning btn-flat" type="submit">Pesquisar</button>
+              </span>
+            </div>
+          </form><br>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome da missão</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if not missions %}
+                <tr>
+                  <td colspan="7">Nenhuma missão encontrada</td>
+                </tr>
+              {% endif %}
+              {% for mission in missions %}
+                <tr>
+                  <td>{{ mission.id }}</td>
+                  <td>{{ mission.name }}</td>
+                  <td>
+                    <form method="POST" action="{{ url_for('mission_edit') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                      <input type="hidden" name="id" value="{{mission.id}}">
+                      <button type="submit" class="btn btn-success ajust_button" title="Editar"><i class="fa fa-pencil"></i></button>
+                    </form>
+                    <form method="POST" action="{{ url_for('mission_delete') }}" style="margin-bottom:0px;display:inline;">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                      <input type="hidden" name="id" value="{{mission.id}}">
+                      <button type="submit" class="btn btn-danger ajust_button" title="Remover"><i class="fa fa-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+		    </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
