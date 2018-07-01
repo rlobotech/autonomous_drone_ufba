@@ -1,6 +1,4 @@
-
-*.md~
-
-*.py~
-
-*.txt~
+*.pyc
+*~
+*.swp
+*.sqlite3
