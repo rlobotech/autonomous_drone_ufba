@@ -19,12 +19,12 @@ aptitude install python-dev python-pip virtualenv build-essential
 ```
 
 ##### Criar o virtualenv
-**venv** é o diretorio do ambiente virtual
+**venv** é o diretorio do virtualenv
 ```
 virtualenv venv
 ```
 
-##### Ativa o virtualenv
+##### Ativar o virtualenv
 ```
 source venv/bin/activate
 ```
@@ -35,7 +35,7 @@ cd ../autonomous_drone_ufba/control-tower/
 pip install -r requirements.txt
 ```
 
-##### Criar banco de dados
+##### Criar o banco de dados
 ```
 python dbinit.py
 ```
@@ -44,13 +44,14 @@ python dbinit.py
 ## Executar a aplicação 
 Somente após preparar o ambiente.
 
-##### Ativa o virtualenv
+##### Ativar o virtualenv
 ```
 source venv/bin/activate
 ```
 
 ##### Inicializar a app
 ```
+cd ../autonomous_drone_ufba/control-tower/
 python run.py
 ```
 
@@ -63,12 +64,11 @@ Acessar a aplicação utilizando as credenciais:
 user: admin@admin
 password: password
 ```
+*As credencias que são carregadas no banco de dados estão no arquivo dbinit.py.*
 
-As credencias são carregadas ao banco no arquivo dbinit.py.
 
-
-# Areas da aplição
-A aplicação contém em principio duas áreas que são Cadastrar Missão e Executar Missão.
+# Areas da APP
+A aplicação contém em principio duas áreas que são **Cadastrar Missão** e **Executar Missão**.
 
 ## Cadastrar Missão
 Nessa página o usuário poderá criar uma missão.
