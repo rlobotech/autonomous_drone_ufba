@@ -59,15 +59,14 @@ class DroneForm(FlaskForm):
     name = StringField(u'Identifição:', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     ip = StringField(u'Endereço IP', validators=[DataRequired()])
-    mission = SelectField(u'Missão',
-                           choices=[('', 'Selecione...'),
-                                    (1, 'PAF5'),
-                                    (2, 'STI'),
-                                    (3, 'As gordinhas de ondina')],
-                           validators=[DataRequired()])
+    mission = SelectField(u'Missão', validators=[DataRequired()])
     emergency = SelectField(u'Emergência', choices=[(True, 'Ativa'), (False, 'Inativa')],
                          coerce=lambda x: x == 'True',
                          validators=[InputRequired()])
+
+    def __init__(self, minhaQuery):
+        super(DroneForm, self).__init__()
+        self.mission.choices = [(c.id, c.name) for c in minhaQuery.query.all()]
 
 class MissionForm(FlaskForm):
     name = StringField(u'Nome da missão:', validators=[DataRequired()])

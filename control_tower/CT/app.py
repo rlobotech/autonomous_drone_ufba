@@ -233,7 +233,7 @@ def drones():
 @app.route('/drone/new/')
 @login_required
 def drone_new():
-    form = DroneForm()
+    form = DroneForm(Missions)
     return render_template('drone_new.html', form=form)
 
 @app.route('/drone/new/submit/', methods = ['POST'])
