@@ -24,6 +24,9 @@ cgps -s
 
 *Note: Everything in English*
 
+
+# Usar o GitKraken como software de versionamento e o sublime 3 como IDE, baixando o plugin do flask.
+
 ##### End ETC
 
 #This example runs a few commands on a remote server and prints the result. 

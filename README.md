@@ -7,6 +7,13 @@ O objetivo desse trabalho é desenvolver uma aplicação para executar missões 
 
 
 ## Preparando o ambiente (Fazer isso somente 1 vez)
+##### Dependencias
+Instalar o Git e o Aptitude
+```
+sudo apt install git
+sudo apt install aptitude
+```
+
 ##### Clonar o repositorio da aplicação
 ```
 git clone https://github.com/rlobotech/autonomous_drone_ufba.git
@@ -15,7 +22,7 @@ git clone https://github.com/rlobotech/autonomous_drone_ufba.git
 ##### Instalar o virtualenv 
 Necessario para que as dependencias do projeto nao sejam instaladas globalmente.
 ```
-aptitude install python-dev python-pip virtualenv build-essential
+sudo aptitude install python-dev python-pip virtualenv build-essential
 ```
 
 ##### Criar o virtualenv
