@@ -1,5 +1,5 @@
 # README
-Os passos seguintes foram testados no Ubunto 14.04 LTS recem instalado.
+Os passos seguintes foram testados no Ubunto 14.04 LTS e 16.04 LTS recem instalado.
 
 
 ## Objetivo
