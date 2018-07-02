@@ -89,13 +89,19 @@
     <ul class="sidebar-menu">
       <li class="header">MENU</li>
       
-      <li class="active">
+      <li {% if request.path == '/' %}class="active"{% endif %}>
         <a href="{{ url_for('dashboard') }}">
-          <i class="fa fa-tv"></i>
+          <i class="fa fa-home"></i>
+          <span>Index</span>
+        </a>
+      </li>
+      <li {% if request.path == '/drones/' %}class="active"{% endif %}>
+        <a href="{{ url_for('drones') }}">
+          <i class="fa fa-rocket"></i>
           <span>Executar Missão</span>
         </a>
       </li>
-      <li>
+      <li {% if request.path == '/map/' %}class="active"{% endif %}>
         <a href="{{ url_for('map') }}">
           <i class="fa fa-keyboard-o"></i>
           <span>Cadastrar Missão</span>
