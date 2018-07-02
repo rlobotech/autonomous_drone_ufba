@@ -101,13 +101,18 @@
           <span>Executar Missão</span>
         </a>
       </li>
-      <li {% if request.path == '/map/' %}class="active"{% endif %}>
-        <a href="{{ url_for('map') }}">
+      <li {% if request.path == '/mission/new/' %}class="active"{% endif %}>
+        <a href="{{ url_for('mission_new') }}">
           <i class="fa fa-keyboard-o"></i>
           <span>Cadastrar Missão</span>
         </a>
       </li>
-
+      <li {% if request.path == '/missions/' %}class="active"{% endif %}>
+        <a href="{{ url_for('missions') }}">
+          <i class="fa fa-server"></i>
+          <span>Lista de Missões</span>
+        </a>
+      </li>
       <!-- Optionally, you can add icons to the links -->
 <!--
       <li class="active">
