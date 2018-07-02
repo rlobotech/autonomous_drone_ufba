@@ -11,14 +11,11 @@
 <section class="content">
   <div class="row">
     <div class="col-md-12">
-      <a href="{{ url_for('mission_new') }}" class="btn btn-app">
-        <i class="fa fa-save"></i>
-        Cadastrar missão
-      </a>
       <div class="box box-warning">
         <div class="box-body table-responsive">
           <form method="POST" action="">
             <div class="input-group input-group-sm">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <input type="text" name="mission_search" class="form-control" value="{{ mission_search }}">
               <span class="input-group-btn">
                 <button class="btn btn-warning btn-flat" type="submit">Pesquisar</button>
