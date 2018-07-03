@@ -239,7 +239,7 @@ def drone_new():
 @app.route('/drone/new/submit/', methods = ['POST'])
 @login_required
 def drone_new_submit():
-    form = DroneForm()
+    form = DroneForm(Missions)
     if form.validate_on_submit():
         name = form.name.data
         model = form.model.data
@@ -386,52 +386,52 @@ def mission_delete():
 ## GPS - mapeamento
 ##########################################################
 
-@app.route('/map/', methods=['GET', 'POST'])
-@login_required
-def map():
-    All = 1
-    drones = Drones.query.all()
-    if request.method == 'POST':
-        drone_id = request.form['id']
-        drones = Drones.query.get(drone_id)
-        if drones:
-            All = 0
-            return render_template('map.html', drones=drones, All=All)
-    return render_template('map.html', drones=drones, All=All)
+#@app.route('/map/', methods=['GET', 'POST'])
+#@login_required
+#def map():
+#    All = 1
+#    drones = Drones.query.all()
+#    if request.method == 'POST':
+#        drone_id = request.form['id']
+#        drones = Drones.query.get(drone_id)
+#        if drones:
+#            All = 0
+#            return render_template('map.html', drones=drones, All=All)
+#    return render_template('map.html', drones=drones, All=All)
 
 ##########################################################
 ## Leitura dos sensores
 ##########################################################
 
-@app.route('/sensors/', methods=['GET', 'POST'])
-@login_required
-def sensors():
-    All = 1
-    drones = Drones.query.all()
-    if request.method == 'POST':
-        drone_id = request.form['id']
-        drones = Drones.query.get(drone_id)
-        if drones:
-            All = 0
-            return render_template('sensors.html', drones=drones, All=All)
-    return render_template('sensors.html', drones=drones, All=All)
+#@app.route('/sensors/', methods=['GET', 'POST'])
+#@login_required
+#def sensors():
+#    All = 1
+#    drones = Drones.query.all()
+#    if request.method == 'POST':
+#        drone_id = request.form['id']
+#        drones = Drones.query.get(drone_id)
+#        if drones:
+#            All = 0
+#            return render_template('sensors.html', drones=drones, All=All)
+#    return render_template('sensors.html', drones=drones, All=All)
 
 ##########################################################
 ## Controlador manual
 ##########################################################
 
-@app.route('/controller/', methods=['GET', 'POST'])
-@login_required
-def controller():
-    All = 1
-    drones = Drones.query.all()
-    if request.method == 'POST':
-        drone_id = request.form['id']
-        drones = Drones.query.get(drone_id)
-        if drones:
-            All = 0
-            return render_template('controller.html', drones=drones, All=All)
-    return render_template('controller.html', drones=drones, All=All)
+#@app.route('/controller/', methods=['GET', 'POST'])
+#@login_required
+#def controller():
+#    All = 1
+#    drones = Drones.query.all()
+#    if request.method == 'POST':
+#        drone_id = request.form['id']
+#        drones = Drones.query.get(drone_id)
+#        if drones:
+#            All = 0
+#            return render_template('controller.html', drones=drones, All=All)
+#    return render_template('controller.html', drones=drones, All=All)
 
 ##########################################################
 ## Login
